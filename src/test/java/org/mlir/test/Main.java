@@ -14,9 +14,11 @@ public class Main {
             MemorySegment stringRefStruct = arena.allocate(MlirStringRef.layout());
             MlirStringRef.length(stringRefStruct, modStr.codePoints().count());
             MlirStringRef.data(stringRefStruct, modStrSegment);
+
             var ctx = Bindings.mlirContextCreate(arena);
             var mod = Bindings.mlirModuleCreateParse(arena, ctx, stringRefStruct);
             var op = Bindings.mlirModuleGetOperation(arena, mod);
+
             Bindings.mlirOperationDump(op);
         }
     }
